@@ -11,7 +11,7 @@ services:
     ports:
       - 8008:8000
     environment:
-      DATABASE_URL: postgres://todoapp@postgres/todos
+      DATABASE_URL: postgresql://user:password@db:5432/api_articles_db
     depends_on:
       - db
 

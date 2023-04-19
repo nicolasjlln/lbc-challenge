@@ -23,6 +23,10 @@ class Articles(ormar.Model):
 
     slug: str = ormar.String(primary_key=True, max_length=256)
     title: str = ormar.String(max_length=256, unique=True, nullable=False)
-    abstract: str = ormar.String(max_length=500, unique=True, nullable=False)
-    author: str = ormar.Boolean(max_length=128, unique=True, nullable=False)
+    url: str = ormar.String(max_length=256, unique=True, nullable=False)
+    author: str = ormar.String(max_length=128, nullable=False)
     publication_date: datetime = ormar.DateTime(nullable=False)
+
+
+engine = sqlalchemy.create_engine(settings.db_url)
+metadata.create_all(engine)
