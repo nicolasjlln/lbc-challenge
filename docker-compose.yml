@@ -11,20 +11,45 @@ services:
     ports:
       - 8008:8000
     environment:
-      DATABASE_URL: postgresql://user:password@db:5432/api_articles_db
+      - MONGODB_URL=mongodb://user:password@mongodb:27017/lbc
+      # DATABASE_URL: postgresql://admin:password@db:5432/articles
     depends_on:
-      - db
+      # - db
+      - mongodb
+    networks:
+      - node-network
 
-  db:
-    image: postgres:15-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    expose:
-      - 5432
+  mongodb:
+    image: mongo:6.0-jammy
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=api_articles_db
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27017:27017
+    volumes:
+      - dbdata6:/data/db
+    networks:
+      - node-network
 
 volumes:
-  postgres_data:
+  dbdata6:
+
+networks:
+  node-network:
+    driver: bridge
+
+
+#   db:
+#     image: postgres:15-alpine
+#     restart: always
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data/
+#     expose:
+#       - 5432
+#     environment:
+#       - POSTGRES_USER=admin
+#       - POSTGRES_PASSWORD=password
+#       - POSTGRES_DB=articles
+
+# volumes:
+#   postgres_data:
