@@ -11,31 +11,24 @@ from app.crawler import Crawler
 from app.database.models import Article
 # from app.database import client as mongo_client
 from mongoengine import connect
+from mongoengine.errors import NotUniqueError
 
 
 router = APIRouter(prefix="/scrapper", tags=["Scrapper"])
 
 @router.post("/retrieve_articles")
 async def retrieve_articles():
-    # runner.crawl(ArticlesSpider)
-    # result = runner.join()
+    # Connect to DB
+    connect(host=os.environ["MONGODB_URL"])
 
-    connect(db="lbc", host=os.environ["MONGODB_URL"])
-
-    
-    # db = mongo_client.lbc
-    # articles = db.articles
-    # articles.insert_many(result)
+    # Dump data into DB article by article to prevet duplicates
     crawl_result = Crawler.execute(spider=ArticlesSpider)
+    handled_articles = len(crawl_result)
     for article_elements in crawl_result:
         article = Article(**article_elements)
-        print(article.to_mongo())
-        article.save()
-    
-    
-    # if not database.is_connected:
-    #     await database.connect()
-    # for item in result:
-    #     Articles.objects.bulk_create
-    # return result#{"Status": "OK"}
-    return {"message": f"Retrieved {len(crawl_result)} elements."}
+        try:
+            article.save()
+        except NotUniqueError:
+            handled_articles -= 1
+
+    return {"message": f"Retrieved {handled_articles} new elements."}

@@ -5,6 +5,7 @@ version: '3.8'
 services:
   web:
     build: .
+    restart: always
     command: uvicorn app.main:app --host 0.0.0.0
     volumes:
       - .:/app
@@ -20,19 +21,26 @@ services:
       - node-network
 
   mongodb:
-    image: mongo:6.0-jammy
+    image: mongo:latest
+    restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: lbc
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
-      - dbdata6:/data/db
+      - mongodb-data:/data/db
+      - mongodb-log:/var/log/mongodb
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
     networks:
       - node-network
 
 volumes:
-  dbdata6:
+  mongodb-data:
+    driver: local
+  mongodb-log:
+    driver: local
 
 networks:
   node-network:

@@ -4,8 +4,6 @@ from datetime import datetime
 from mongoengine import Document, StringField, DateTimeField
 
 class Article(Document):
-    # meta = {'db_alias': 'articles'}
-
     title = StringField(
         max_length=256, required=True, unique_with="publication_date"
     )

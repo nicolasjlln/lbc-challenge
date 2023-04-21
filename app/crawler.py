@@ -7,7 +7,6 @@ from typing import List, Dict
 import subprocess
 
 from scrapy import Spider
-from scrapy.crawler import CrawlerProcess
 
 class Crawler:
     @classmethod
