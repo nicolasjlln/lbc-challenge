@@ -86,7 +86,7 @@ The app suffers from the scrapping part being inside the webapp part. The scrapp
 
 ### Any improvment
 
-As said earlier, the scrapping part must be separated from the webapp to be a whole process on its own. The best practices lead the developer to this kind of architecture.
+As said earlier, the scrapping part must be separated from the webapp to be a whole process on its own. The best practices lead the developer to this kind of architecture. Also, some CI/CD can be implemented to automatically deliver the differents app components into an images registry, to later be used in a cloud architecture and other tools such as kubernetes to handle the app scaling.
 
 ### What about distributed data processing
 
