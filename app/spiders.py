@@ -5,6 +5,7 @@ import dateparser
 
 
 class ArticlesSpider(scrapy.Spider):
+    """ Articles Spider collecting new articles from LeMonde website. """
     name = 'articles-spider'
     start_urls = ['https://www.lemonde.fr/actualite-en-continu/']
     custom_settings = {

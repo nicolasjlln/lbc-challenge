@@ -13,9 +13,7 @@ services:
       - 8008:8000
     environment:
       - MONGODB_URL=mongodb://user:password@mongodb:27017/lbc
-      # DATABASE_URL: postgresql://admin:password@db:5432/articles
     depends_on:
-      # - db
       - mongodb
     networks:
       - node-network
@@ -32,6 +30,7 @@ services:
     volumes:
       - mongodb-data:/data/db
       - mongodb-log:/var/log/mongodb
+      # This volume permits to automatically init MongoDB database
       - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
     networks:
       - node-network
@@ -45,19 +44,3 @@ volumes:
 networks:
   node-network:
     driver: bridge
-
-
-#   db:
-#     image: postgres:15-alpine
-#     restart: always
-#     volumes:
-#       - postgres_data:/var/lib/postgresql/data/
-#     expose:
-#       - 5432
-#     environment:
-#       - POSTGRES_USER=admin
-#       - POSTGRES_PASSWORD=password
-#       - POSTGRES_DB=articles
-
-# volumes:
-#   postgres_data:

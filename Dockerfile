@@ -1,19 +1,20 @@
 # Dockerfile
 
-# pull the official docker image
+# Pull the official docker image
 FROM python:3.7-bullseye
 
-# set work directory
+# Set work directory
 WORKDIR /app
 
-# set env variables
+# Prevented from writing .pyc or .pyo files
 ENV PYTHONDONTWRITEBYTECODE 1
+# Ensure python output streams are sent straight to terminal
 ENV PYTHONUNBUFFERED 1
 
-# install dependencies
+# Upgrade pip and install dependencies
 RUN pip install --upgrade pip
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# copy project
+# Copy project
 COPY . .
