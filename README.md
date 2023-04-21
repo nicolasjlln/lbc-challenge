@@ -1,8 +1,12 @@
 # Little Big Code technical challenge
 
-Articles collect from **LeMonde**.
-
 Author: Nicolas JULLIEN
+
+## Abstract
+
+Articles are collected from [**LeMonde**](https://www.lemonde.fr/) website. 
+
+Python was the chosen language to complete this challenge, using fastAPI to set up an interface and scrappy for the scrapping part. Docker wraps the app components.
 
 This app have two main functionalities. The first one is to allow scrapping of the `LeMonde` website to collect the latest news thanks to an api endpoint. The second one provides two endpoints to retrieve a number of articles on one side and to retrieve a specific article with its URL on the other side.
 
